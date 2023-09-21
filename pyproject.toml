@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "ta-sandbox"
+version = "0.1.0"
+description = ""
+authors = ["Gonzalo Matheu (framework) <gonzalommj@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9.12,<3.10"
+numpy = "^1.26.0"
+pandas = "^2.1.1"
+mplfinance = "^0.12.10b0"
+pandas-datareader = "^0.10.0"
+requests-cache = "^1.1.0"
+streamlit = "^1.26.0"
+pandas-ta = "^0.3.14b0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
