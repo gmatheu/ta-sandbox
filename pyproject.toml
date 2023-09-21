@@ -15,6 +15,7 @@ requests-cache = "^1.1.0"
 streamlit = "^1.26.0"
 pandas-ta = "^0.3.14b0"
 yfinance = "^0.2.28"
+alphavantage-api = "^1.0.33"
 
 
 [build-system]
