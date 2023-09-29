@@ -4,8 +4,8 @@ from typing import Dict, Tuple
 
 import streamlit as st
 st.set_page_config(
-   page_title="Ex-stream-ly Cool App",
-   page_icon="🧊",
+   page_title="TA Sandbox",
+    page_icon=":dollar:",
    layout="wide",
    initial_sidebar_state="expanded",
 )
@@ -84,33 +84,59 @@ def summary():
     st.markdown(f"# {list(page_names_to_funcs.keys())[0]}")
     st.write(""" """)
 
+    tickers_sets = {
+        'cedears': [
+            "NVDAD.BA",
+            "SATLD.BA",
+            "TSLAD.BA",
+            "GOLDD.BA",
+            "GOGLD.BA",
+            "NFLXD.BA",
+            "FCXD.BA",
+            "BABAD.BA",
+            "METAD.BA",
+            "MELID.BA",
+            "INTCD.BA",
+            "AMDD.BA",
+            "TSLAD.BA",
+            "NKED.BA",
+            "AMZND.BA",
+            "MSFTD.BA",
+            "PBRD.BA",
+        ],
+        'global': [
+            'GOOG',
+            "NVDA",
+            "SATL",
+            "TSLA",
+            "GOLD",
+            "NFLX",
+            "FCX",
+            "BABA",
+            "META",
+            "MELI",
+            "INTC",
+            "AMD",
+            "TSLA",
+            "NKE",
+            "AMZN",
+            "MSFT",
+            "PBR",
+        ],
+        'etf': [
+            'GBS.L'
+        ]
+    }
+    ticker_set = st.sidebar.selectbox("Ticker set", tickers_sets.keys())
     timeframe = "D"
-    tickers = [
-        "NVDAD.BA",
-        "SATLD.BA",
-        "TSLAD.BA",
-        "GOLDD.BA",
-        "GOGLD.BA",
-        "NFLXD.BA",
-        "FCXD.BA",
-        "BABAD.BA",
-        "METAD.BA",
-        "MELID.BA",
-        "INTCD.BA",
-        "AMDD.BA",
-        "TSLAD.BA",
-        "NKED.BA",
-        "AMZND.BA",
-        "MSFTD.BA",
-        "PBRD.BA",
-    ]
+    tickers =  tickers_sets.get(ticker_set, tickers_sets['cedears'])
 
     @st.cache_data(ttl=timedelta(hours=24))
-    def get_all_trades() -> Dict[str, TradeSet]:
+    def get_all_trades(tickers) -> Dict[str, TradeSet]:
         return all_trades(tickers, timeframe, cache=False)
 
     try:
-        selected_trades = get_all_trades()
+        selected_trades = get_all_trades(tickers)
         selected_tickers = st.multiselect(
             "Choose tickers", tickers, tickers
          )
@@ -178,6 +204,8 @@ def summary():
                         return chart + pctret_chart
                     actret_chart = create_actret_chart()
 
+                    tradingv_view_symbol = ticker
+                    st.markdown(f"Symbol: *{ticker}* [chart](https://www.tradingview.com/chart/KRY341eq/?symbol={tradingv_view_symbol})")
                     with st.container():
                         col1, col2 = st.columns(2)
                         col1.altair_chart(trend_chart + signals_chart, use_container_width=True)
