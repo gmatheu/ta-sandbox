@@ -157,7 +157,7 @@ class Watchlist(object):
                 print(f"[X] Plot kind not implemented")
                 return
 
-    def load(self, ticker: str = None, tf: str = None, index: str = "date", drop: list = [], 
+    def load(self, ticker: str = None, tf: str = None, index: str = "date", drop: list = [],
              plot: bool = False, force: bool = False, cache=False, **kwargs) -> pd.DataFrame:
         """Loads or Downloads (if a local csv does not exist) the data from the
         Data Source. When successful, it returns a Data Frame for the requested
@@ -194,7 +194,7 @@ class Watchlist(object):
                     df = df.set_index(pd.DatetimeIndex(df[index]))
             if self.ds_name == "yahoo":
                 yf_data = self.ds.Ticker(ticker)
-                df = yf_data.history(period="max")
+                df = yf_data.history(period="6mo")
                 if cache:
                     to_save = f"{self.file_path}/{ticker}_{tf}.csv"
                     print(f"[+] Saving: {to_save}")
