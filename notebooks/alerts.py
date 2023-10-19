@@ -48,12 +48,16 @@ def all_trades(tickers: List[str], timeframe: str, cache=True) -> Dict[str, Trad
         # Example Long Trends
         # long = ta.sma(asset.close, 50) > ta.sma(asset.close, 200) # SMA(50) > SMA(200) "Golden/Death Cross"
         # long = ta.sma(asset.close, 10) > ta.sma(asset.close, 20) # SMA(10) > SMA(20)
-        long = ta.ema(asset.close, 10) > ta.ema(asset.close, 20)  # EMA(8) > EMA(21)
+        long = None
+        try:
+            long = ta.ema(asset.close, 10) > ta.ema(asset.close, 20)  # EMA(8) > EMA(21)
+        except:
+            pass
         # long = ta.increasing(ta.ema(asset.close, 50))
         # long = ta.macd(asset.close).iloc[:,1] > 0 # MACD Histogram is positive
         # long = ta.amat(asset.close, 50, 200).AMATe_LR_2  # Long Run of AMAT(50, 200) with lookback of 2 bars
 
-        # long &= ta.increasing(ta.ema(asset.close, 50), 2) 
+        # long &= ta.increasing(ta.ema(asset.close, 50), 2)
         # Uncomment for further long restrictions, in this case when EMA(50) is increasing/sloping upwards
 
         # long = 1 - long # uncomment to create a short signal of the trend
@@ -118,4 +122,3 @@ def all_trades(tickers: List[str], timeframe: str, cache=True) -> Dict[str, Trad
         return (trades, trendy, asset, long)
 
     return {ticker: create_trades(ticker) for ticker in tickers}
-

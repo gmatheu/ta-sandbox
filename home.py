@@ -92,7 +92,7 @@ def summary():
             "GOLDD.BA",
             "GOGLD.BA",
             "NFLXD.BA",
-            "FCXD.BA",
+            # "FCXD.BA",
             "BABAD.BA",
             "METAD.BA",
             "MELID.BA",
@@ -124,7 +124,11 @@ def summary():
             "PBR",
         ],
         'etf': [
-            'GBS.L'
+            'GBS.L',
+            'PHSP.L',
+            'AIVL',
+            'AIEQ',
+            'GLD',
         ]
     }
     ticker_set = st.sidebar.selectbox("Ticker set", tickers_sets.keys())
@@ -215,7 +219,7 @@ def summary():
             with st.expander("Tickers", expanded=False):
                 for ticker in selected_tickers:
                     (trades, trendy, asset, long) = selected_trades[ticker]
-                    
+
                     # chart = asset[["close", "EMA_10", "EMA_20", "EMA_50"]]
                     # chart.plot(subplots=False, figsize=(16, 10), color=colors("BkGrOrRd"), title=ptitle, grid=True)
 
