@@ -122,6 +122,7 @@ def summary():
             "AMZN",
             "MSFT",
             "PBR",
+            "MARA"
         ],
         'etf': [
             'GBS.L',
