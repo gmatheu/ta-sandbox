@@ -216,7 +216,7 @@ def summary():
                     actret_chart = create_actret_chart()
 
                     tradingv_view_symbol = ticker
-                    st.markdown(f"Symbol: *{ticker}* [chart](https://www.tradingview.com/chart/KRY341eq/?symbol={tradingv_view_symbol})")
+                    st.markdown(f"Symbol: *{ticker}* [TradingView](https://www.tradingview.com/chart/KRY341eq/?symbol={tradingv_view_symbol}) / [Yahoo!](https://finance.yahoo.com/quote/{ticker}/chart?p={ticker})")
                     with st.container():
                         col1, col2 = st.columns(2)
                         col1.altair_chart(trend_chart + signals_chart, use_container_width=True)
