@@ -130,6 +130,12 @@ def summary():
             'AIVL',
             'AIEQ',
             'GLD',
+            'IAU',
+            'ROBO',
+            'BOTZ',
+            'SOXX',
+            'LIT',
+            'EMQQ',
         ]
     }
     ticker_set = st.sidebar.selectbox("Ticker set", tickers_sets.keys())
