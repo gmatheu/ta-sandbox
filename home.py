@@ -136,17 +136,21 @@ def summary():
             'SOXX',
             'LIT',
             'EMQQ',
+            'GBTC'
         ]
     }
     ticker_set = st.sidebar.selectbox("Ticker set", tickers_sets.keys())
     timeframe = "D"
-    tickers =  tickers_sets.get(ticker_set, tickers_sets['cedears'])
+    tickers = tickers_sets.get(ticker_set, tickers_sets['cedears'])
 
     @st.cache_data(ttl=timedelta(hours=24))
     def get_all_trades(tickers) -> Dict[str, TradeSet]:
         return all_trades(tickers, timeframe, cache=False)
 
     try:
+        for group_tickers in tickers_sets.values():
+            get_all_trades(group_tickers)
+
         selected_trades = get_all_trades(tickers)
         selected_tickers = st.multiselect(
             "Choose tickers", tickers, tickers
