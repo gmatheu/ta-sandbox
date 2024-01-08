@@ -122,7 +122,9 @@ def summary():
             "AMZN",
             "MSFT",
             "PBR",
-            "MARA"
+            "MARA",
+            "SPCE",
+            "FSLR"
         ],
         'etf': [
             'GBS.L',
