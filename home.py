@@ -117,14 +117,20 @@ def summary():
             "MELI",
             "INTC",
             "AMD",
-            "TSLA",
             "NKE",
             "AMZN",
             "MSFT",
             "PBR",
             "MARA",
             "SPCE",
-            "FSLR"
+            "FSLR",
+            "PLUG",
+            "PHUN",
+            "RUN",
+            "SCATC",
+            "CHPT",
+            "SEDG"
+
         ],
         'etf': [
             'GBS.L',
