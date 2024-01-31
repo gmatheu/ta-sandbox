@@ -127,7 +127,7 @@ def summary():
             "PLUG",
             "PHUN",
             "RUN",
-            "SCATC",
+            "SCATC.OL",
             "CHPT",
             "SEDG"
 
