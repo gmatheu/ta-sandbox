@@ -114,7 +114,8 @@ def summary():
             "SCATC.OL",
             "CHPT",
             "SEDG",
-            "MDB"
+            "MDB",
+            "HAL"
         ],
         'cedears': [
             "NVDAD.BA",
