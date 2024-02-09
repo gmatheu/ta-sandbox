@@ -117,6 +117,13 @@ def summary():
             "MDB",
             "HAL"
         ],
+        'crypto': [
+            'BTC-USD',
+            'ETH-USD',
+            'SOL-USD',
+            'MATIC-USD',
+            'RUNE-USD'
+        ],
         'cedears': [
             "NVDAD.BA",
             "SATLD.BA",
