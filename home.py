@@ -1,8 +1,8 @@
-import streamlit as st
 from datetime import timedelta
 from typing import Dict, Tuple
 
 import streamlit as st
+
 st.set_page_config(
     page_title="TA Sandbox",
     page_icon=":dollar:",
@@ -42,11 +42,12 @@ def intro():
 
 
 def plotting_demo():
-    import streamlit as st
     import time
-    import numpy as np
 
-    st.markdown(f'# {list(page_names_to_funcs.keys())[1]}')
+    import numpy as np
+    import streamlit as st
+
+    st.markdown(f"# {list(page_names_to_funcs.keys())[1]}")
     st.write(
         """
         This demo illustrates a combination of plotting and animation with
@@ -77,54 +78,82 @@ Streamlit. We're generating a bunch of random numbers in a loop for around
 
 
 def summary():
-    from notebooks.alerts import all_trades, TradeSet
-    import streamlit as st
-    import pandas as pd
-    import altair as alt
-
     from urllib.error import URLError
+
+    import altair as alt
+    import pandas as pd
+    import streamlit as st
+
+    from notebooks.alerts import TradeSet, all_trades
 
     st.markdown(f"# {list(page_names_to_funcs.keys())[0]}")
     st.write(""" """)
 
     tickers_sets = {
-        'global': [
-            'GOOG',
-            "NVDA",
-            "SATL",
-            "TSLA",
-            "GOLD",
-            "NFLX",
-            "FCX",
-            "BABA",
-            "META",
-            "MELI",
-            "INTC",
+        "global": [
+            "AIVL",
+            "AIYY",
             "AMD",
-            "NKE",
             "AMZN",
-            "MSFT",
-            "PBR",
-            "MARA",
-            "SPCE",
-            "FSLR",
-            "PLUG",
-            "PHUN",
-            "RUN",
-            "SCATC.OL",
+            "BABA",
+            "BOTZ",
             "CHPT",
-            "SEDG",
+            "DLO",
+            "EMQQ",
+            "ETHE",
+            "EZBC",
+            "EZET",
+            "FCX",
+            "FSLR",
+            "FXI",
+            "GBTC",
+            "GLD",
+            "GOLD",
+            "GOOG",
+            "HAL",
+            "IAU",
+            "INTC",
+            "JBL",
+            "LIT",
+            "MARA",
+            "MAXN",
             "MDB",
-            "HAL"
+            "MELI",
+            "META",
+            "MSFT",
+            "MSTR",
+            "NFLX",
+            "NKE",
+            "NU",
+            "NVDA",
+            "OKLO",
+            "PBR",
+            "PHUN",
+            "PLUG",
+            "QCOM",
+            "RIVN",
+            "ROBO",
+            "RUN",
+            "SATL",
+            "SCATC.OL",
+            "SEDG",
+            "SERV",
+            "SOXX",
+            "SPCE",
+            "TOYO",
+            "TSLA",
+            "WGMI",
         ],
-        'crypto': [
-            'BTC-USD',
-            'ETH-USD',
-            'SOL-USD',
-            'MATIC-USD',
-            'RUNE-USD'
+        "crypto": [
+            "BTC-USD",
+            "ETH-USD",
+            "LTC-USD",
+            "SOL-USD",
+            "MATIC-USD",
+            "RUNE-USD",
+            "THETA-USD",
         ],
-        'cedears': [
+        "cedears": [
             "NVDAD.BA",
             "SATLD.BA",
             "TSLAD.BA",
@@ -143,24 +172,24 @@ def summary():
             "MSFTD.BA",
             "PBRD.BA",
         ],
-        'etf': [
-            'GBS.L',
-            'PHSP.L',
-            'AIVL',
-            'AIEQ',
-            'GLD',
-            'IAU',
-            'ROBO',
-            'BOTZ',
-            'SOXX',
-            'LIT',
-            'EMQQ',
-            'GBTC'
-        ]
+        "etf": [
+            "GBS.L",
+            "PHSP.L",
+            "AIVL",
+            "AIEQ",
+            "GLD",
+            "IAU",
+            "ROBO",
+            "BOTZ",
+            "SOXX",
+            "LIT",
+            "EMQQ",
+            "GBTC",
+        ],
     }
     ticker_set = st.sidebar.selectbox("Ticker set", tickers_sets.keys())
     timeframe = "D"
-    tickers = tickers_sets.get(ticker_set, tickers_sets['global'])
+    tickers = tickers_sets.get(ticker_set, tickers_sets["global"])
 
     @st.cache_data(ttl=timedelta(hours=24))
     def get_all_trades(tickers) -> Dict[str, TradeSet]:
@@ -171,9 +200,7 @@ def summary():
             get_all_trades(group_tickers)
 
         selected_trades = get_all_trades(tickers)
-        selected_tickers = st.multiselect(
-            "Choose tickers", tickers, tickers
-        )
+        selected_tickers = st.multiselect("Choose tickers", tickers, tickers)
         if not selected_tickers:
             st.error("Please select at least one ticker.")
         else:
@@ -184,22 +211,26 @@ def summary():
                     col1, col2 = st.columns(2)
                     col1.markdown("### Long and Short Trends")
                     col1.markdown(
-                        "**Trends** are either a _Trend_ (```1```) or _No Trend_ (```0```) depending on the **Trend** passed into ***Trend Signals**")
-                    col1.markdown("The **Trades** are either _Enter_ (```1```) or _Exit_ (```-1```) or _No Position/Action_ (```0```). These are based on the **Trend** passed into **Trend Signals** whether they are _Long_ or _Short_ Trends.")
+                        "**Trends** are either a _Trend_ (```1```) or _No Trend_ (```0```) depending on the **Trend** passed into ***Trend Signals**"
+                    )
+                    col1.markdown(
+                        "The **Trades** are either _Enter_ (```1```) or _Exit_ (```-1```) or _No Position/Action_ (```0```). These are based on the **Trend** passed into **Trend Signals** whether they are _Long_ or _Short_ Trends."
+                    )
 
                     col2.markdown(
-                        "### Buy and Hold Returns (*PCTRET_1*) vs. Cum. Active Returns (*ACTRET_1*)")
+                        "### Buy and Hold Returns (*PCTRET_1*) vs. Cum. Active Returns (*ACTRET_1*)"
+                    )
                 st.markdown("### Entries Last Week")
                 for ticker in selected_tickers:
                     (trades, _, _, _) = selected_trades[ticker]
                     trades = trades.reset_index()
-                    last_week = pd.to_datetime('today') - pd.Timedelta(weeks=1)
-                    last_entry = trades[trades['Signal'] == 1].tail(1)['Date']
+                    last_week = pd.to_datetime("today") - pd.Timedelta(weeks=1)
+                    last_entry = trades[trades["Signal"] == 1].tail(1)["Date"]
                     if last_entry.values[0] > last_week:
                         st.markdown(
                             f"Symbol: *{ticker}* [Yahoo!](https://finance.yahoo.com/quote/{ticker}/chart?p={ticker})"
                         )
-                        st.write(trades[trades['Signal'] == 1].tail(1))
+                        st.write(trades[trades["Signal"] == 1].tail(1))
 
                 st.markdown("### Signals")
                 for ticker in selected_tickers:
@@ -208,56 +239,80 @@ def summary():
                     def create_signals_chart():
                         trades = trendy.TS_Trades.tail(30)
 
-                        source = trades.rename(
-                            'signal').to_frame().reset_index()
-                        source['symbol'] = ticker
+                        source = trades.rename("signal").to_frame().reset_index()
+                        source["symbol"] = ticker
 
-                        chart = alt.Chart(source).mark_area(opacity=0.5).encode(
-                            x=alt.X("Date:T").timeUnit(
-                                "yearmonthdate").title("date"),
-                            y="signal",
-                            color=alt.Color("symbol")
-                        ).properties(
-                            height=150,
+                        chart = (
+                            alt.Chart(source)
+                            .mark_area(opacity=0.5)
+                            .encode(
+                                x=alt.X("Date:T")
+                                .timeUnit("yearmonthdate")
+                                .title("date"),
+                                y="signal",
+                                color=alt.Color("symbol"),
+                            )
+                            .properties(
+                                height=150,
+                            )
                         )
                         return chart
+
                     signals_chart = create_signals_chart()
 
                     def create_trend_chart():
                         long_trend = trendy.TS_Trends.tail(30)
 
-                        source = long_trend.rename(
-                            'signal').to_frame().reset_index()
-                        source['symbol'] = ticker
+                        source = long_trend.rename("signal").to_frame().reset_index()
+                        source["symbol"] = ticker
 
-                        chart = alt.Chart(source).mark_line(point=True).encode(
-                            x=alt.X("Date:T").timeUnit(
-                                "yearmonthdate").title("date"),
-                            y="signal",
-                            color=alt.Color("symbol:N")
-                        ).properties(
-                            height=150,
+                        chart = (
+                            alt.Chart(source)
+                            .mark_line(point=True)
+                            .encode(
+                                x=alt.X("Date:T")
+                                .timeUnit("yearmonthdate")
+                                .title("date"),
+                                y="signal",
+                                color=alt.Color("symbol:N"),
+                            )
+                            .properties(
+                                height=150,
+                            )
                         )
                         return chart
+
                     trend_chart = create_trend_chart()
 
                     returns = (
-                        (asset.tail(30)[["PCTRET_1", "ACTRET_1"]] + 1).cumprod() - 1).reset_index()
+                        (asset.tail(30)[["PCTRET_1", "ACTRET_1"]] + 1).cumprod() - 1
+                    ).reset_index()
 
                     def create_actret_chart():
                         source = returns
 
-                        chart = alt.Chart(source).mark_area(opacity=0.7).encode(
-                            x=alt.X("Date:T").timeUnit(
-                                "yearmonthdate").title("date"),
-                            y="ACTRET_1"
+                        chart = (
+                            alt.Chart(source)
+                            .mark_area(opacity=0.7)
+                            .encode(
+                                x=alt.X("Date:T")
+                                .timeUnit("yearmonthdate")
+                                .title("date"),
+                                y="ACTRET_1",
+                            )
                         )
-                        pctret_chart = alt.Chart(source).mark_line(point=True).encode(
-                            x=alt.X("Date:T").timeUnit(
-                                "yearmonthdate").title("date"),
-                            y="PCTRET_1"
+                        pctret_chart = (
+                            alt.Chart(source)
+                            .mark_line(point=True)
+                            .encode(
+                                x=alt.X("Date:T")
+                                .timeUnit("yearmonthdate")
+                                .title("date"),
+                                y="PCTRET_1",
+                            )
                         )
                         return chart + pctret_chart
+
                     actret_chart = create_actret_chart()
 
                     tradingv_view_symbol = ticker
@@ -267,9 +322,9 @@ def summary():
                     with st.container():
                         col1, col2 = st.columns(2)
                         col1.altair_chart(
-                            trend_chart + signals_chart, use_container_width=True)
-                        col2.altair_chart(
-                            actret_chart, use_container_width=True)
+                            trend_chart + signals_chart, use_container_width=True
+                        )
+                        col2.altair_chart(actret_chart, use_container_width=True)
 
             st.write("#### Tickers")
             with st.expander("Tickers", expanded=False):
@@ -283,25 +338,20 @@ def summary():
                     close_chart = (
                         alt.Chart(source)
                         .mark_line()
-                        .encode(
-                            x="Date:T",
-                            y=alt.Y("close:N")
-                        )
+                        .encode(x="Date:T", y=alt.Y("close:N"))
                     )
                     ema10_chart = (
                         alt.Chart(source)
                         .mark_line()
-                        .encode(
-                            x="Date:T",
-                            y=alt.Y("EMA_10:N")
-                        )
+                        .encode(x="Date:T", y=alt.Y("EMA_10:N"))
                     )
                     st.markdown(f"#### Ticker: {ticker}")
                     with st.container():
                         col1, col2 = st.columns(2)
                         col1.write(asset)
                         col2.altair_chart(
-                            close_chart + ema10_chart, use_container_width=True)
+                            close_chart + ema10_chart, use_container_width=True
+                        )
     except URLError as e:
         st.error(
             """
@@ -314,11 +364,11 @@ def summary():
 
 
 def data_frame_demo():
-    import streamlit as st
-    import pandas as pd
-    import altair as alt
-
     from urllib.error import URLError
+
+    import altair as alt
+    import pandas as pd
+    import streamlit as st
 
     st.markdown(f"# {list(page_names_to_funcs.keys())[1]}")
     st.write(
@@ -338,21 +388,18 @@ def data_frame_demo():
     try:
         df = get_UN_data()
         countries = st.multiselect(
-            "Choose countries", list(df.index), [
-                "China", "United States of America"]
+            "Choose countries", list(df.index), ["China", "United States of America"]
         )
         if not countries:
             st.error("Please select at least one country.")
         else:
             data = df.loc[countries]
             data /= 1000000.0
-            st.write("### Gross Agricultural Production ($B)",
-                     data.sort_index())
+            st.write("### Gross Agricultural Production ($B)", data.sort_index())
 
             data = data.T.reset_index()
             data = pd.melt(data, id_vars=["index"]).rename(
-                columns={"index": "year",
-                         "value": "Gross Agricultural Product ($B)"}
+                columns={"index": "year", "value": "Gross Agricultural Product ($B)"}
             )
             chart = (
                 alt.Chart(data)
@@ -379,7 +426,7 @@ page_names_to_funcs = {
     "Summary": summary,
     "Dataframe demo": data_frame_demo,
     "—": intro,
-    "Plotting Demo": plotting_demo
+    "Plotting Demo": plotting_demo,
 }
 
 demo_name = st.sidebar.selectbox("Choose a demo", page_names_to_funcs.keys())
